@@ -45,6 +45,30 @@ dataSources:
         - event: 'NewPost(indexed address,string,indexed string)'
           handler: handleNewPost
       file: ./src/poster-mapping.ts
+  - kind: ethereum/contract
+    name: TributeEscrow
+    network: rinkeby
+    source:
+      address: '0x236320A4aa768772E9B2CeE21C22a8EEcD98C91B'
+      abi: TributeEscrow
+      startBlock: 10372038
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Proposal
+      abis:
+        - name: TributeEscrow
+          file: ./abis/TributeEscrow.json
+        - name: Erc20
+          file: ./abis/Erc20.json
+        - name: Erc20Bytes32
+          file: ./abis/Erc20Bytes32.json
+      eventHandlers:
+        - event: 'TributeProposal(indexed address,address,uint256,address,uint256)'
+          handler: handleTributeProposal
+      file: ./src/tribute-escrow-mapping.ts
 templates:
   - kind: ethereum/contract
     name: BaalTemplate

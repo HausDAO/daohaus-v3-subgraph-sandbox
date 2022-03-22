@@ -50,6 +50,11 @@ type Proposal @entity {
   yesBalance: BigInt!
   noBalance: BigInt!
   maxTotalSharesAndLootAtYesVote: BigInt!
+  tributeToken: Bytes
+  tributeOffered: BigInt
+  tributeTokenSymbol: String
+  tributeTokenDecimals: BigInt
+  tributeRecipient: Bytes
   votes: [Vote!] @derivedFrom(field: "proposal")
 }
 

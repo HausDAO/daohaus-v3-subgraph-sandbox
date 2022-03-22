@@ -559,20 +559,11 @@ export function handleDelegateVotesChanged(event: DelegateVotesChanged): void {
   member.save();
 }
 
-// - DelegateChanged(indexed address,indexed address,indexed address)
-//// record who the member is delegating too (delegatingTo)
-
-// - DelegateVotesChanged(indexed address,uint256,uint256)
-//// create/load delegate member
-//// update newBalance (delegateShares)
-
-//// non active member has zero share/loot AND delegateShares
-
 // gnosis events
 // - AvatarSet(indexed address,indexed address)
 // - ChangedGuard(address)
 // - OwnershipTransferred(indexed address,indexed address)
 // - TargetSet(indexed address,indexed address)
 
-// standard erc20 event - no current need to map
+// erc20 event - no current need to map
 // - Approval(indexed address,indexed address,uint256)

@@ -33,6 +33,12 @@ module.exports.config = {
         address: "0x000000000000cd17345801aa8147b8d3950260ff",
         startBlock: 10305239,
       },
+      {
+        name: "tributeEscrow",
+        template: "tribute-escrow-ds.yaml",
+        address: "0x236320A4aa768772E9B2CeE21C22a8EEcD98C91B",
+        startBlock: 10372038,
+      },
     ],
     templates: [
       {

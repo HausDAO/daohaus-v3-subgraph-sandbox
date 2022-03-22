@@ -574,6 +574,91 @@ export class Proposal extends Entity {
     this.set("maxTotalSharesAndLootAtYesVote", Value.fromBigInt(value));
   }
 
+  get tributeToken(): Bytes | null {
+    let value = this.get("tributeToken");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set tributeToken(value: Bytes | null) {
+    if (!value) {
+      this.unset("tributeToken");
+    } else {
+      this.set("tributeToken", Value.fromBytes(<Bytes>value));
+    }
+  }
+
+  get tributeOffered(): BigInt | null {
+    let value = this.get("tributeOffered");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set tributeOffered(value: BigInt | null) {
+    if (!value) {
+      this.unset("tributeOffered");
+    } else {
+      this.set("tributeOffered", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get tributeTokenSymbol(): string | null {
+    let value = this.get("tributeTokenSymbol");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set tributeTokenSymbol(value: string | null) {
+    if (!value) {
+      this.unset("tributeTokenSymbol");
+    } else {
+      this.set("tributeTokenSymbol", Value.fromString(<string>value));
+    }
+  }
+
+  get tributeTokenDecimals(): BigInt | null {
+    let value = this.get("tributeTokenDecimals");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set tributeTokenDecimals(value: BigInt | null) {
+    if (!value) {
+      this.unset("tributeTokenDecimals");
+    } else {
+      this.set("tributeTokenDecimals", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get tributeRecipient(): Bytes | null {
+    let value = this.get("tributeRecipient");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set tributeRecipient(value: Bytes | null) {
+    if (!value) {
+      this.unset("tributeRecipient");
+    } else {
+      this.set("tributeRecipient", Value.fromBytes(<Bytes>value));
+    }
+  }
+
   get votes(): Array<string> | null {
     let value = this.get("votes");
     if (!value || value.kind == ValueKind.NULL) {
