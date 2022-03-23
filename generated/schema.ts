@@ -642,8 +642,8 @@ export class Proposal extends Entity {
     }
   }
 
-  get tributeRecipient(): Bytes | null {
-    let value = this.get("tributeRecipient");
+  get tributeEscrowRecipient(): Bytes | null {
+    let value = this.get("tributeEscrowRecipient");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -651,11 +651,11 @@ export class Proposal extends Entity {
     }
   }
 
-  set tributeRecipient(value: Bytes | null) {
+  set tributeEscrowRecipient(value: Bytes | null) {
     if (!value) {
-      this.unset("tributeRecipient");
+      this.unset("tributeEscrowRecipient");
     } else {
-      this.set("tributeRecipient", Value.fromBytes(<Bytes>value));
+      this.set("tributeEscrowRecipient", Value.fromBytes(<Bytes>value));
     }
   }
 

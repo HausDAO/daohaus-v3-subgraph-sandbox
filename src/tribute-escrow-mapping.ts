@@ -12,13 +12,14 @@ export function handleTributeProposal(event: TributeProposal): void {
   let proposal = Proposal.load(proposalId);
   if (proposal === null) {
     log.info("handleTributeProposal proposal not found, {}", [proposalId]);
+    return;
   }
 
   proposal.tributeOffered = event.params.amount;
   proposal.tributeToken = event.params.token;
   proposal.tributeTokenSymbol = getErc20Symbol(event.params.token);
   proposal.tributeTokenDecimals = getErc20Decimals(event.params.token);
-  proposal.tributeRecipient = event.params.recipient;
+  proposal.tributeEscrowRecipient = event.params.recipient;
 
   proposal.save();
 }

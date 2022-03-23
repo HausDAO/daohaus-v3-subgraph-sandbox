@@ -9,7 +9,9 @@
     "deploy-local": "graph deploy hausdao/daohaus-v3-rinkeby --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
     "build:all": "yarn codegen && yarn build",
     "prepare:rinkeby": "node manifests/deploy-prep.js rinkeby",
-    "deploy:rinkeby": "yarn prepare:rinkeby && yarn build:all && graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ hausdao/daohaus-v3-rinkeby"
+    "deploy:rinkeby": "yarn prepare:rinkeby && yarn build:all && graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ hausdao/daohaus-v3-rinkeby",
+    "prepare:kovan": "node manifests/deploy-prep.js kovan",
+    "deploy:kovan": "yarn prepare:kovan && yarn build:all && graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ hausdao/daohaus-v3-kovan"
   },
   "dependencies": {
     "@graphprotocol/graph-ts": "^0.22.1",

@@ -54,7 +54,7 @@ type Proposal @entity {
   tributeOffered: BigInt
   tributeTokenSymbol: String
   tributeTokenDecimals: BigInt
-  tributeRecipient: Bytes
+  tributeEscrowRecipient: Bytes
   votes: [Vote!] @derivedFrom(field: "proposal")
 }
 

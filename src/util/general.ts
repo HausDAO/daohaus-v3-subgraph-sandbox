@@ -12,21 +12,23 @@ export function getErc20Symbol(tokenAddress: Address): string | null {
     let otherSymbol = erc20Bytes32.try_symbol();
     if (otherSymbol.reverted) {
       log.info("other symbol reverted token, {}", [tokenAddress.toHexString()]);
+      return null;
     } else {
       return otherSymbol.value.toString();
     }
   } else {
-    symbol.value;
+    return symbol.value;
   }
 }
 
 export function getErc20Decimals(tokenAddress: Address): BigInt | null {
   let contract = Erc20.bind(tokenAddress);
 
-  let symbol = contract.try_decimals();
-  if (symbol.reverted) {
+  let decimals = contract.try_decimals();
+  if (decimals.reverted) {
     log.info("decimals reverted token, {}", [tokenAddress.toHexString()]);
+    return null;
   } else {
-    return symbol.value;
+    return BigInt.fromI32(decimals.value);
   }
 }
