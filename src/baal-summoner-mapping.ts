@@ -33,5 +33,5 @@ export function handleSummonBaal(event: SummonBaal): void {
 
   dao.save();
 
-  addTransaction(event.block, event.transaction);
+  addTransaction(event.block, event.transaction, event.params.baal);
 }

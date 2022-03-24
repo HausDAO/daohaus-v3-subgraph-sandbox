@@ -279,6 +279,23 @@ export class Dao extends Entity {
       this.set("metaData", Value.fromString(<string>value));
     }
   }
+
+  get eventTransactions(): string | null {
+    let value = this.get("eventTransactions");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set eventTransactions(value: string | null) {
+    if (!value) {
+      this.unset("eventTransactions");
+    } else {
+      this.set("eventTransactions", Value.fromString(<string>value));
+    }
+  }
 }
 
 export class Proposal extends Entity {
@@ -1174,6 +1191,7 @@ export class EventTransaction extends Entity {
     this.set("id", Value.fromString(id));
 
     this.set("createdAt", Value.fromString(""));
+    this.set("dao", Value.fromString(""));
   }
 
   save(): void {
@@ -1211,5 +1229,14 @@ export class EventTransaction extends Entity {
 
   set createdAt(value: string) {
     this.set("createdAt", Value.fromString(value));
+  }
+
+  get dao(): string {
+    let value = this.get("dao");
+    return value!.toString();
+  }
+
+  set dao(value: string) {
+    this.set("dao", Value.fromString(value));
   }
 }

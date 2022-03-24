@@ -20,6 +20,7 @@ type Dao @entity {
   proposals: [Proposal!] @derivedFrom(field: "dao")
   members: [Member!] @derivedFrom(field: "dao")
   metaData: MetaData @derivedFrom(field: "dao")
+  eventTransactions: EventTransaction @derivedFrom(field: "dao")
 }
 
 type Proposal @entity {
@@ -111,4 +112,5 @@ type Shaman @entity {
 type EventTransaction @entity {
   id: ID!
   createdAt: String!
+  dao: Dao!
 }

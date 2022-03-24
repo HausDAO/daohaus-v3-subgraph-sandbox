@@ -3,9 +3,11 @@ import { EventTransaction } from "../../generated/schema";
 
 export function addTransaction(
   block: ethereum.Block,
-  tx: ethereum.Transaction
+  tx: ethereum.Transaction,
+  dao: Bytes
 ): void {
   let transaction = new EventTransaction(tx.hash.toHex());
   transaction.createdAt = block.timestamp.toString();
+  transaction.dao = dao.toHexString();
   transaction.save();
 }

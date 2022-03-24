@@ -171,7 +171,7 @@ export function handleTransfer(event: Transfer): void {
   burnShares(dao, burnMemberId, event.params.amount);
   mintShares(event, dao, mintMemberId);
 
-  addTransaction(event.block, event.transaction);
+  addTransaction(event.block, event.transaction, event.address);
 }
 
 // TransferLoot (index_topic_1 address from, index_topic_2 address to, uint256 amount)
@@ -223,7 +223,7 @@ export function handleTransferLoot(event: TransferLoot): void {
   burnLoot(dao, burnMemberId, event.params.amount);
   mintLoot(event, dao, mintMemberId);
 
-  addTransaction(event.block, event.transaction);
+  addTransaction(event.block, event.transaction, event.address);
 }
 
 // GovernanceConfigSet (uint32 voting, uint32 grace, uint256 newOffering, uint256 quorum, uint256 sponsor, uint256 minRetention)
@@ -241,6 +241,8 @@ export function handleGovernanceConfigSet(event: GovernanceConfigSet): void {
   dao.minRetentionPercent = event.params.minRetention;
 
   dao.save();
+
+  addTransaction(event.block, event.transaction, event.address);
 }
 
 // ShamanSet (index_topic_1 address shaman, uint256 permission)
@@ -266,6 +268,8 @@ export function handleShamanSet(event: ShamanSet): void {
   shaman.permissions = event.params.permission;
 
   shaman.save();
+
+  addTransaction(event.block, event.transaction, event.address);
 }
 
 export function handleSharesPaused(event: SharesPaused): void {
@@ -277,6 +281,8 @@ export function handleSharesPaused(event: SharesPaused): void {
   dao.sharesPaused = event.params.paused;
 
   dao.save();
+
+  addTransaction(event.block, event.transaction, event.address);
 }
 
 export function handleLootPaused(event: LootPaused): void {
@@ -288,6 +294,8 @@ export function handleLootPaused(event: LootPaused): void {
   dao.lootPaused = event.params.paused;
 
   dao.save();
+
+  addTransaction(event.block, event.transaction, event.address);
 }
 
 export function handleSubmitProposal(event: SubmitProposal): void {
@@ -346,6 +354,8 @@ export function handleSubmitProposal(event: SubmitProposal): void {
 
     dao.save();
   }
+
+  addTransaction(event.block, event.transaction, event.address);
 }
 
 export function handleSponsorProposal(event: SponsorProposal): void {
@@ -377,6 +387,8 @@ export function handleSponsorProposal(event: SponsorProposal): void {
 
   proposal.save();
   dao.save();
+
+  addTransaction(event.block, event.transaction, event.address);
 }
 
 export function handleProcessProposal(event: ProcessProposal): void {
@@ -395,6 +407,8 @@ export function handleProcessProposal(event: ProcessProposal): void {
   proposal.actionFailed = event.params.actionFailed;
 
   proposal.save();
+
+  addTransaction(event.block, event.transaction, event.address);
 }
 
 // why do we need this when the above event emit it too?
@@ -412,6 +426,8 @@ export function handleProcessingFailed(event: ProcessingFailed): void {
   proposal.actionFailed = true;
 
   proposal.save();
+
+  addTransaction(event.block, event.transaction, event.address);
 }
 
 export function handleCancelProposal(event: CancelProposal): void {
@@ -428,6 +444,8 @@ export function handleCancelProposal(event: CancelProposal): void {
   proposal.cancelled = true;
 
   proposal.save();
+
+  addTransaction(event.block, event.transaction, event.address);
 }
 
 export function handleSubmitVote(event: SubmitVote): void {
@@ -480,6 +498,8 @@ export function handleSubmitVote(event: SubmitVote): void {
 
   vote.save();
   proposal.save();
+
+  addTransaction(event.block, event.transaction, event.address);
 }
 
 export function handleRageQuit(event: Ragequit): void {
@@ -517,6 +537,8 @@ export function handleRageQuit(event: Ragequit): void {
   rage.tokens = event.params.tokens.map<Bytes>((a) => a as Bytes);
 
   rage.save();
+
+  addTransaction(event.block, event.transaction, event.address);
 }
 
 export function handleDelegateChanged(event: DelegateChanged): void {
@@ -535,6 +557,8 @@ export function handleDelegateChanged(event: DelegateChanged): void {
   member.delegatingTo = event.params.toDelegate;
 
   member.save();
+
+  addTransaction(event.block, event.transaction, event.address);
 }
 
 export function handleDelegateVotesChanged(event: DelegateVotesChanged): void {
@@ -557,6 +581,8 @@ export function handleDelegateVotesChanged(event: DelegateVotesChanged): void {
   member.delegateShares = event.params.newBalance;
 
   member.save();
+
+  addTransaction(event.block, event.transaction, event.address);
 }
 
 // gnosis events
