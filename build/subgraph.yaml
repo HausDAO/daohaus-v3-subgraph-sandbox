@@ -49,9 +49,9 @@ dataSources:
     name: TributeEscrow
     network: rinkeby
     source:
-      address: "0x236320A4aa768772E9B2CeE21C22a8EEcD98C91B"
+      address: "0x34f1F0585A4a8ca62e9573940f77aD25FbdED860"
       abi: TributeEscrow
-      startBlock: 10372038
+      startBlock: 10417761
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5

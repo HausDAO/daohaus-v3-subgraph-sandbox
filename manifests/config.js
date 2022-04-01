@@ -28,8 +28,8 @@ module.exports.config = {
       {
         name: "tributeEscrow",
         template: "tribute-escrow-ds.yaml",
-        address: "0x3840453a3907916113db88bfac2349533a736c64",
-        startBlock: 30581348,
+        address: "0xcC3fE4c9F976167db373DEe88EB9b0E1Dc834c6B",
+        startBlock: 30729673,
       },
     ],
     templates: [
@@ -60,8 +60,8 @@ module.exports.config = {
       {
         name: "tributeEscrow",
         template: "tribute-escrow-ds.yaml",
-        address: "0x236320A4aa768772E9B2CeE21C22a8EEcD98C91B",
-        startBlock: 10372038,
+        address: "0x34f1F0585A4a8ca62e9573940f77aD25FbdED860",
+        startBlock: 10417761,
       },
     ],
     templates: [
