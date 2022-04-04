@@ -9,7 +9,7 @@ import {
   Address,
 } from "@graphprotocol/graph-ts";
 import { NewPost } from "../../generated/Poster/Poster";
-import { MetaData } from "../../generated/schema";
+import { MetaData, Proposal } from "../../generated/schema";
 
 class JsonStringResult {
   data: string;
@@ -53,6 +53,22 @@ export namespace parser {
     return result;
   }
 
+  export function getObjectFromJson(
+    object: TypedMap<string, JSONValue>,
+    key: string
+  ): JsonResult {
+    let result: JsonResult;
+    result.error = "none";
+    let value = object.get(key);
+
+    if (!value || value.kind != JSONValueKind.OBJECT) {
+      result.error = "Missing valid Poster field: " + key;
+      return result;
+    }
+    result.object = value.toObject();
+    return result;
+  }
+
   export function createDaoMetaSummoning(
     object: TypedMap<string, JSONValue>,
     daoAddress: Bytes | null,
@@ -83,58 +99,4 @@ export namespace parser {
 
     return true;
   }
-
-  // export function createBasicContent(
-  //   object: TypedMap<string, JSONValue>,
-  //   molochAddress: string,
-  //   event: NewPost,
-  //   ratified: boolean
-  // ): Content {
-  //   let entityId = molochAddress
-  //     .concat("-content-")
-  //     .concat(event.block.timestamp.toString());
-  //   let entity = new Content(entityId);
-
-  //   let content = parser.getStringFromJson(object, "content");
-  //   if (content.error != "none") {
-  //     return entity;
-  //   }
-  //   entity.content = content.data;
-
-  //   let contentType = parser.getStringFromJson(object, "contentType");
-  //   if (contentType.error != "none") {
-  //     return entity;
-  //   }
-  //   entity.contentType = contentType.data;
-
-  //   let location = parser.getStringFromJson(object, "location");
-  //   if (location.error != "none") {
-  //     entity.location = "docs";
-  //   } else {
-  //     entity.location = location.data;
-  //   }
-
-  //   let title = parser.getStringFromJson(object, "title");
-  //   if (title.error != "none") {
-  //   } else {
-  //     entity.title = title.data;
-  //   }
-
-  //   let description = parser.getStringFromJson(object, "description");
-  //   if (description.error != "none") {
-  //   } else {
-  //     entity.description = description.data;
-  //   }
-
-  //   entity.createdAt = event.block.timestamp.toString();
-  //   entity.transactionHash = event.transaction.hash;
-  //   entity.molochAddress = molochAddress;
-  //   entity.memberAddress = event.transaction.from;
-  //   entity.rawData = event.params.content;
-  //   entity.ratified = ratified;
-
-  //   entity.save();
-
-  //   return entity;
-  // }
 }

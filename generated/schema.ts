@@ -329,6 +329,7 @@ export class Proposal extends Entity {
     this.set("yesBalance", Value.fromBigInt(BigInt.zero()));
     this.set("noBalance", Value.fromBigInt(BigInt.zero()));
     this.set("maxTotalSharesAndLootAtYesVote", Value.fromBigInt(BigInt.zero()));
+    this.set("proposalType", Value.fromString(""));
   }
 
   save(): void {
@@ -673,6 +674,83 @@ export class Proposal extends Entity {
       this.unset("tributeEscrowRecipient");
     } else {
       this.set("tributeEscrowRecipient", Value.fromBytes(<Bytes>value));
+    }
+  }
+
+  get proposalType(): string {
+    let value = this.get("proposalType");
+    return value!.toString();
+  }
+
+  set proposalType(value: string) {
+    this.set("proposalType", Value.fromString(value));
+  }
+
+  get title(): string | null {
+    let value = this.get("title");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set title(value: string | null) {
+    if (!value) {
+      this.unset("title");
+    } else {
+      this.set("title", Value.fromString(<string>value));
+    }
+  }
+
+  get description(): string | null {
+    let value = this.get("description");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set description(value: string | null) {
+    if (!value) {
+      this.unset("description");
+    } else {
+      this.set("description", Value.fromString(<string>value));
+    }
+  }
+
+  get contentURI(): string | null {
+    let value = this.get("contentURI");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set contentURI(value: string | null) {
+    if (!value) {
+      this.unset("contentURI");
+    } else {
+      this.set("contentURI", Value.fromString(<string>value));
+    }
+  }
+
+  get contentURIType(): string | null {
+    let value = this.get("contentURIType");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set contentURIType(value: string | null) {
+    if (!value) {
+      this.unset("contentURIType");
+    } else {
+      this.set("contentURIType", Value.fromString(<string>value));
     }
   }
 

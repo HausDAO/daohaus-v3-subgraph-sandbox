@@ -27,6 +27,7 @@ import {
   TransferLoot,
 } from "../generated/templates/BaalTemplate/Baal";
 import { constants } from "./util/constants";
+import { parser } from "./util/parser";
 import { addTransaction } from "./util/transactions";
 
 function burnShares(dao: Dao, memberId: string, amount: BigInt): void {
@@ -319,18 +320,13 @@ export function handleSubmitProposal(event: SubmitProposal): void {
   proposal.votingPeriod = event.params.votingPeriod;
   proposal.expiration = event.params.expiration;
   proposal.sponsored = event.params.selfSponsor;
-  proposal.details = event.params.details;
   proposal.cancelled = false;
   proposal.processed = false;
   proposal.actionFailed = false;
   proposal.passed = false;
   proposal.proposalOffering = event.transaction.value;
   proposal.maxTotalSharesAndLootAtYesVote = constants.BIGINT_ZERO;
-
   proposal.selfSponsor = event.params.selfSponsor;
-  // proposal.sponsor = event.params.selfSponsor
-  //   ? event.transaction.from
-  //   : constants.ADDRESS_ZERO;
   proposal.prevProposalId = event.params.selfSponsor
     ? dao.latestSponsoredProposalId
     : constants.BIGINT_ZERO;
@@ -346,6 +342,41 @@ export function handleSubmitProposal(event: SubmitProposal): void {
         .plus(event.params.votingPeriod)
         .plus(dao.gracePeriod)
     : constants.BIGINT_ZERO;
+
+  let result = parser.getResultFromJson(event.params.details);
+  if (result.error != "none") {
+    log.error("details parse error prop: {}", [proposalId]);
+    proposal.details = event.params.details;
+  } else {
+    let object = result.object;
+
+    let title = parser.getStringFromJson(object, "title");
+    if (title.error == "none") {
+      proposal.title = title.data;
+    }
+
+    let description = parser.getStringFromJson(object, "description");
+    if (description.error == "none") {
+      proposal.description = description.data;
+    }
+
+    let proposalType = parser.getStringFromJson(object, "proposalType");
+    if (proposalType.error == "none") {
+      proposal.proposalType = proposalType.data;
+    } else {
+      proposal.proposalType = "unknown";
+    }
+
+    let contentURI = parser.getStringFromJson(object, "contentURI");
+    if (contentURI.error == "none") {
+      proposal.contentURI = contentURI.data;
+    }
+
+    let contentURIType = parser.getStringFromJson(object, "contentURIType");
+    if (contentURIType.error == "none") {
+      proposal.contentURIType = contentURIType.data;
+    }
+  }
 
   proposal.save();
 
