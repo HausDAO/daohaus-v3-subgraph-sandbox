@@ -40,7 +40,20 @@ module.exports.config = {
     ],
   },
   xdai: {
-    dataSources: [],
+    dataSources: [
+      {
+        name: "baalSummoner",
+        template: "baal-summoner-ds.yaml",
+        address: "0x37A2080f275E26fFEfB6E68F3005826368156C5C",
+        startBlock: 21773466,
+      },
+      {
+        name: "poster",
+        template: "poster-ds.yaml",
+        address: "0x000000000000cd17345801aa8147b8d3950260ff",
+        startBlock: 21773466,
+      },
+    ],
     templates: [],
   },
   rinkeby: {
