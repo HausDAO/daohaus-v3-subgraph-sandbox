@@ -263,6 +263,40 @@ export class Dao extends Entity {
     }
   }
 
+  get rageQuits(): Array<string> | null {
+    let value = this.get("rageQuits");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set rageQuits(value: Array<string> | null) {
+    if (!value) {
+      this.unset("rageQuits");
+    } else {
+      this.set("rageQuits", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
+  get shaman(): Array<string> | null {
+    let value = this.get("shaman");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set shaman(value: Array<string> | null) {
+    if (!value) {
+      this.unset("shaman");
+    } else {
+      this.set("shaman", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+
   get metaData(): string | null {
     let value = this.get("metaData");
     if (!value || value.kind == ValueKind.NULL) {
