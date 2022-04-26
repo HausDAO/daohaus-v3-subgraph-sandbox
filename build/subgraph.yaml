@@ -8,9 +8,9 @@ dataSources:
     name: BaalSummoner
     network: xdai
     source:
-      address: "0x37A2080f275E26fFEfB6E68F3005826368156C5C"
+      address: "0xd3160C463E01535c4937AF6f46161EE0b0469A4E"
       abi: BaalSummoner
-      startBlock: 21773466
+      startBlock: 21823419
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -30,7 +30,7 @@ dataSources:
     source:
       address: "0x000000000000cd17345801aa8147b8d3950260ff"
       abi: Poster
-      startBlock: 21773466
+      startBlock: 21823419
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -45,4 +45,77 @@ dataSources:
         - event: NewPost(indexed address,string,indexed string)
           handler: handleNewPost
       file: Poster/Poster.wasm
-templates: []
+  - kind: ethereum/contract
+    name: TributeEscrow
+    network: xdai
+    source:
+      address: "0x85D7E338EFdAf29b1bD7109De08454457ECaf3c4"
+      abi: TributeEscrow
+      startBlock: 21824445
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Proposal
+      abis:
+        - name: TributeEscrow
+          file: TributeEscrow/abis/TributeEscrow.json
+        - name: Erc20
+          file: TributeEscrow/abis/Erc20.json
+        - name: Erc20Bytes32
+          file: TributeEscrow/abis/Erc20Bytes32.json
+      eventHandlers:
+        - event: TributeProposal(indexed address,address,uint256,address,uint256)
+          handler: handleTributeProposal
+      file: TributeEscrow/TributeEscrow.wasm
+templates:
+  - kind: ethereum/contract
+    name: BaalTemplate
+    network: xdai
+    source:
+      abi: Baal
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: templates/BaalTemplate/BaalTemplate.wasm
+      entities:
+        - Dao
+      abis:
+        - name: Baal
+          file: BaalTemplate/abis/Baal.json
+      eventHandlers:
+        - event: SetupComplete(bool,bool,uint32,uint32,uint256,uint256,uint256,uint256,string,string,uint256,uint256)
+          handler: handleSetupComplete
+        - event: GovernanceConfigSet(uint32,uint32,uint256,uint256,uint256,uint256)
+          handler: handleGovernanceConfigSet
+        - event: ShamanSet(indexed address,uint256)
+          handler: handleShamanSet
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: TransferLoot(indexed address,indexed address,uint256)
+          handler: handleTransferLoot
+        - event: LootPaused(bool)
+          handler: handleLootPaused
+        - event: SharesPaused(bool)
+          handler: handleSharesPaused
+        - event: SubmitProposal(indexed uint256,indexed
+            bytes32,uint256,bytes,uint256,bool,uint256,string)
+          handler: handleSubmitProposal
+        - event: SponsorProposal(indexed address,indexed uint256,indexed uint256)
+          handler: handleSponsorProposal
+        - event: ProcessProposal(indexed uint256,bool,bool)
+          handler: handleProcessProposal
+        - event: ProcessingFailed(indexed uint256)
+          handler: handleProcessingFailed
+        - event: CancelProposal(indexed uint256)
+          handler: handleCancelProposal
+        - event: SubmitVote(indexed address,uint256,indexed uint256,indexed bool)
+          handler: handleSubmitVote
+        - event: Ragequit(indexed address,address,indexed uint256,indexed uint256,address[])
+          handler: handleRageQuit
+        - event: DelegateChanged(indexed address,indexed address,indexed address)
+          handler: handleDelegateChanged
+        - event: DelegateVotesChanged(indexed address,uint256,uint256)
+          handler: handleDelegateVotesChanged

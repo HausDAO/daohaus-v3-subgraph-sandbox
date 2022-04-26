@@ -19,7 +19,7 @@ type Dao @entity {
   latestSponsoredProposalId: BigInt!
   proposals: [Proposal!] @derivedFrom(field: "dao")
   members: [Member!] @derivedFrom(field: "dao")
-  rageQuits: [Shaman!] @derivedFrom(field: "dao")
+  rageQuits: [RageQuit!] @derivedFrom(field: "dao")
   shaman: [Shaman!] @derivedFrom(field: "dao")
   metaData: MetaData @derivedFrom(field: "dao")
   eventTransactions: EventTransaction @derivedFrom(field: "dao")

@@ -44,17 +44,28 @@ module.exports.config = {
       {
         name: "baalSummoner",
         template: "baal-summoner-ds.yaml",
-        address: "0x37A2080f275E26fFEfB6E68F3005826368156C5C",
-        startBlock: 21773466,
+        address: "0xd3160C463E01535c4937AF6f46161EE0b0469A4E",
+        startBlock: 21823419,
       },
       {
         name: "poster",
         template: "poster-ds.yaml",
         address: "0x000000000000cd17345801aa8147b8d3950260ff",
-        startBlock: 21773466,
+        startBlock: 21823419,
+      },
+      {
+        name: "tributeEscrow",
+        template: "tribute-escrow-ds.yaml",
+        address: "0x85D7E338EFdAf29b1bD7109De08454457ECaf3c4",
+        startBlock: 21824445,
       },
     ],
-    templates: [],
+    templates: [
+      {
+        name: "baalTemplate",
+        template: "baal-template.yaml",
+      },
+    ],
   },
   rinkeby: {
     dataSources: [
