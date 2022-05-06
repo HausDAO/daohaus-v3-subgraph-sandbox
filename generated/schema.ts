@@ -32,6 +32,8 @@ export class Dao extends Entity {
     this.set("totalShares", Value.fromBigInt(BigInt.zero()));
     this.set("totalLoot", Value.fromBigInt(BigInt.zero()));
     this.set("latestSponsoredProposalId", Value.fromBigInt(BigInt.zero()));
+    this.set("proposalCount", Value.fromBigInt(BigInt.zero()));
+    this.set("activeMemberCount", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -229,6 +231,24 @@ export class Dao extends Entity {
     this.set("latestSponsoredProposalId", Value.fromBigInt(value));
   }
 
+  get proposalCount(): BigInt {
+    let value = this.get("proposalCount");
+    return value!.toBigInt();
+  }
+
+  set proposalCount(value: BigInt) {
+    this.set("proposalCount", Value.fromBigInt(value));
+  }
+
+  get activeMemberCount(): BigInt {
+    let value = this.get("activeMemberCount");
+    return value!.toBigInt();
+  }
+
+  set activeMemberCount(value: BigInt) {
+    this.set("activeMemberCount", Value.fromBigInt(value));
+  }
+
   get proposals(): Array<string> | null {
     let value = this.get("proposals");
     if (!value || value.kind == ValueKind.NULL) {
@@ -352,9 +372,9 @@ export class Proposal extends Entity {
     this.set("details", Value.fromString(""));
     this.set("selfSponsor", Value.fromBoolean(false));
     this.set("sponsored", Value.fromBoolean(false));
+    this.set("sponsor", Value.fromBytes(Bytes.empty()));
     this.set("cancelled", Value.fromBoolean(false));
     this.set("processed", Value.fromBoolean(false));
-    this.set("sponsor", Value.fromBytes(Bytes.empty()));
     this.set("actionFailed", Value.fromBoolean(false));
     this.set("passed", Value.fromBoolean(false));
     this.set("proposalOffering", Value.fromBigInt(BigInt.zero()));
@@ -527,6 +547,15 @@ export class Proposal extends Entity {
     this.set("sponsored", Value.fromBoolean(value));
   }
 
+  get sponsor(): Bytes {
+    let value = this.get("sponsor");
+    return value!.toBytes();
+  }
+
+  set sponsor(value: Bytes) {
+    this.set("sponsor", Value.fromBytes(value));
+  }
+
   get cancelled(): boolean {
     let value = this.get("cancelled");
     return value!.toBoolean();
@@ -543,15 +572,6 @@ export class Proposal extends Entity {
 
   set processed(value: boolean) {
     this.set("processed", Value.fromBoolean(value));
-  }
-
-  get sponsor(): Bytes {
-    let value = this.get("sponsor");
-    return value!.toBytes();
-  }
-
-  set sponsor(value: Bytes) {
-    this.set("sponsor", Value.fromBytes(value));
   }
 
   get actionFailed(): boolean {

@@ -17,6 +17,8 @@ type Dao @entity {
   totalShares: BigInt!
   totalLoot: BigInt!
   latestSponsoredProposalId: BigInt!
+  proposalCount: BigInt!
+  activeMemberCount: BigInt!
   proposals: [Proposal!] @derivedFrom(field: "dao")
   members: [Member!] @derivedFrom(field: "dao")
   rageQuits: [RageQuit!] @derivedFrom(field: "dao")
@@ -42,9 +44,9 @@ type Proposal @entity {
   details: String!
   selfSponsor: Boolean!
   sponsored: Boolean!
+  sponsor: Bytes!
   cancelled: Boolean!
   processed: Boolean!
-  sponsor: Bytes!
   actionFailed: Boolean!
   passed: Boolean!
   proposalOffering: BigInt!

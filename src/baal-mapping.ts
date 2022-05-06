@@ -40,6 +40,11 @@ function burnShares(dao: Dao, memberId: string, amount: BigInt): void {
     dao.totalShares = dao.totalShares.minus(amount);
 
     member.save();
+
+    if (member.shares.plus(member.loot) == constants.BIGINT_ZERO) {
+      dao.activeMemberCount = dao.activeMemberCount.minus(constants.BIGINT_ONE);
+    }
+
     dao.save();
   }
 }
@@ -56,9 +61,18 @@ function mintShares(event: Transfer, dao: Dao, memberId: string): void {
     member.shares = constants.BIGINT_ZERO;
     member.loot = constants.BIGINT_ZERO;
   }
+  let memberInitialSharesAndLoot = member.shares.plus(member.loot);
 
   member.shares = member.shares.plus(event.params.amount);
   dao.totalShares = dao.totalShares.plus(event.params.amount);
+
+  log.info("memberInitialSharesAndLoot: {}, ", [
+    memberInitialSharesAndLoot.toString(),
+  ]);
+
+  if (memberInitialSharesAndLoot == constants.BIGINT_ZERO) {
+    dao.activeMemberCount = dao.activeMemberCount.plus(constants.BIGINT_ONE);
+  }
 
   member.save();
   dao.save();
@@ -74,6 +88,11 @@ function burnLoot(dao: Dao, memberId: string, amount: BigInt): void {
     dao.totalLoot = dao.totalLoot.minus(amount);
 
     member.save();
+
+    if (member.shares.plus(member.loot) == constants.BIGINT_ZERO) {
+      dao.activeMemberCount = dao.activeMemberCount.minus(constants.BIGINT_ONE);
+    }
+
     dao.save();
   }
 }
@@ -90,9 +109,14 @@ function mintLoot(event: TransferLoot, dao: Dao, memberId: string): void {
     member.shares = constants.BIGINT_ZERO;
     member.loot = constants.BIGINT_ZERO;
   }
+  let memberInitialSharesAndLoot = member.shares.plus(member.loot);
 
   member.loot = member.loot.plus(event.params.amount);
   dao.totalLoot = dao.totalLoot.plus(event.params.amount);
+
+  if (memberInitialSharesAndLoot == constants.BIGINT_ZERO) {
+    dao.activeMemberCount = dao.activeMemberCount.plus(constants.BIGINT_ONE);
+  }
 
   member.save();
   dao.save();
@@ -141,7 +165,8 @@ export function handleTransfer(event: Transfer): void {
     let memberId = event.address
       .toHexString()
       .concat("-member-")
-      .concat(event.params.from.toHexString());
+      // .concat(event.params.from.toHexString());
+      .concat(event.params.to.toHexString());
 
     mintShares(event, dao, memberId);
     return;
@@ -193,7 +218,7 @@ export function handleTransferLoot(event: TransferLoot): void {
     let memberId = event.address
       .toHexString()
       .concat("-member-")
-      .concat(event.params.from.toHexString());
+      .concat(event.params.to.toHexString());
 
     mintLoot(event, dao, memberId);
     return;
@@ -382,9 +407,9 @@ export function handleSubmitProposal(event: SubmitProposal): void {
 
   if (event.params.selfSponsor) {
     dao.latestSponsoredProposalId = event.params.proposal;
-
-    dao.save();
   }
+  dao.proposalCount = dao.proposalCount.plus(constants.BIGINT_ONE);
+  dao.save();
 
   addTransaction(event.block, event.transaction, event.address);
 }
